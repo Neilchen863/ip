@@ -1,4 +1,4 @@
-# Duke User Guide
+# HiChat User Guide
 
 // Update the title above to match the actual product name
 
