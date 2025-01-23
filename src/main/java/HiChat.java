@@ -163,6 +163,18 @@ public class HiChat {
 
             if (command.contains("todo")) {
                 String[] splitCommand = command.split(" ");
+                int len = splitCommand.length;
+                String errorMsg = "____________________________________________________________\n" +
+                        "☹ OOPS!!! The description of a todo cannot be empty." + "\n" +
+                        "____________________________________________________________\n";
+                try {
+                    if (len == 1) {
+                        throw new Exception(errorMsg);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
                 String task = "";
                 for (int i = 1; i < splitCommand.length; i++) {
                     task += splitCommand[i] + " ";
@@ -171,7 +183,7 @@ public class HiChat {
                 listOfTasks.add(new ToDo(task));
             }
 
-            if (command.contains("deadline")) {
+            else if (command.contains("deadline")) {
                 String[] splitCommand = command.split(" ");
                 String task = "";
                 String deadline = "";
@@ -191,7 +203,7 @@ public class HiChat {
                 listOfTasks.add(newTask);
             }
 
-            if (command.contains("event")) {
+            else if (command.contains("event")) {
                 String[] splitCommand = command.split(" ");
                 String task = "";
                 String startTime = "";
@@ -225,6 +237,12 @@ public class HiChat {
                 listOfTasks.add(newTask);
             }
 
+            else {
+                System.out.println("____________________________________________________________\n" +
+                        " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n" +
+                        "____________________________________________________________\n");
+                continue;
+            }
 
             System.out.println("____________________________________________________________\n" +
                     " OKAY. I have added this task: " +
