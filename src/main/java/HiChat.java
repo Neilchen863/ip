@@ -7,6 +7,7 @@ public class HiChat {
         private String task;
         private boolean isDone;
 
+
         public task(String task){
             this.task = task;
             this.isDone = false;
@@ -34,6 +35,72 @@ public class HiChat {
     }
 
 
+    public static class ToDo extends task{
+        public ToDo (String task){
+            super(task);
+        }
+
+        @Override
+        public String toString(){
+            if (super.isDone){
+                return "[T] "  + "[X] " + super.task;
+            } else {
+                return "[T] "  + "[ ] " + super.task;
+            }
+        }
+    }
+
+    public static class Deadline extends task{
+        private String deadline;
+
+        public Deadline(String task, String deadline){
+            super(task);
+            this.deadline = deadline;
+        }
+
+        public String getDeadline(){
+            return this.deadline;
+        }
+
+        @Override
+        public String toString(){
+            if (super.isDone){
+                return "[D] "  + "[X] " + super.task + " (by: " + this.deadline + ")";
+            } else {
+                return "[D] "  + "[ ] " + super.task + " (by: " + this.deadline + ")";
+            }
+        }
+    }
+
+    public static class Event extends task{
+        private String startTime;
+        private String endTime;
+
+        public Event(String task, String startTime, String endTime){
+            super(task);
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
+        public String getStartTime(){
+            return this.startTime;
+        }
+
+        public String getEndTime(){
+            return this.endTime;
+        }
+
+        @Override
+        public String toString(){
+            if (super.isDone){
+                return "[E] "  + "[X] " + super.task + " (from: " + this.startTime + " to: " + this.endTime + ")";
+            } else {
+                return "[E] "  + "[ ] " + super.task + " (from: " + this.startTime + " to: " + this.endTime + ")";
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String logo = " __    __   __    ______  __    __       ___   .___________.\n"
@@ -54,7 +121,6 @@ public class HiChat {
 
         while (true) {
             String command = scanner.nextLine();
-            task newTask = new task(command);
             if (command.equals("bye")) {
                 // Farewell message for "bye"
                 System.out.println("____________________________________________________________\n" +
@@ -95,10 +161,75 @@ public class HiChat {
                 continue;
             }
 
-            listOfTasks.add(newTask);
+            if (command.contains("todo")) {
+                String[] splitCommand = command.split(" ");
+                String task = "";
+                for (int i = 1; i < splitCommand.length; i++) {
+                    task += splitCommand[i] + " ";
+                }
+
+                listOfTasks.add(new ToDo(task));
+            }
+
+            if (command.contains("deadline")) {
+                String[] splitCommand = command.split(" ");
+                String task = "";
+                String deadline = "";
+                boolean isTask = true;
+                for (int i = 1; i < splitCommand.length; i++) {
+                    if (splitCommand[i].equals("/by")) {
+                        isTask = false;
+                        continue;
+                    }
+                    if (isTask) {
+                        task += splitCommand[i] + " ";
+                    } else {
+                        deadline += splitCommand[i] + " ";
+                    }
+                }
+                task newTask = new Deadline(task, deadline);
+                listOfTasks.add(newTask);
+            }
+
+            if (command.contains("event")) {
+                String[] splitCommand = command.split(" ");
+                String task = "";
+                String startTime = "";
+                String endTime = "";
+                boolean isTask = true;
+                boolean isStartTime = false;
+                boolean isEndTime = false;
+
+                for (int i = 1; i < splitCommand.length; i++) {
+                    if (splitCommand[i].equals("/from")) {
+                        isTask = false;
+                        isStartTime = true;
+                        continue;
+                    }
+
+                    if (splitCommand[i].equals("/to")) {
+                        isStartTime = false;
+                        isEndTime = true;
+                        continue;
+                    }
+
+                    if (isTask) {
+                        task += splitCommand[i] + " ";
+                    } else if (isStartTime) {
+                        startTime += splitCommand[i] + " ";
+                    } else if (isEndTime) {
+                        endTime += splitCommand[i] + " ";
+                    }
+                }
+                task newTask = new Event(task, startTime, endTime);
+                listOfTasks.add(newTask);
+            }
+
+
             System.out.println("____________________________________________________________\n" +
-                    " added: " +
+                    " OKAY. I have added this task: " +
                     command + "\n" +
+                    " Now you have " + listOfTasks.size() + " tasks in the list.\n" +
                     "____________________________________________________________\n");
         }
 
