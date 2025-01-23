@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HiChat {
@@ -14,9 +16,13 @@ public class HiChat {
                 " What can I do for you?\n" +
                 "____________________________________________________________\n");
 
+
+
+        List<String> listOfTasks = new ArrayList<String>();
+//        String[] listOfTasks = new String[100];
+
         while (true) {
             String command = scanner.nextLine();
-
             if (command.equals("bye")) {
                 // Farewell message for "bye"
                 System.out.println("____________________________________________________________\n" +
@@ -25,7 +31,20 @@ public class HiChat {
                 break; // Exit the loop
             }
 
+            if (command.equals("list")) {
+                System.out.println("____________________________________________________________");
+                for (int i = 0; i < listOfTasks.size(); i++) {
+                    System.out.println((i + 1) + ". " + listOfTasks.get(i));
+                }
+                System.out.println(
+                        "____________________________________________________________");
+                continue;
+            }
+
+
+            listOfTasks.add(command);
             System.out.println("____________________________________________________________\n" +
+                    " added: " +
                     command + "\n" +
                     "____________________________________________________________\n");
         }
