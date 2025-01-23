@@ -161,6 +161,19 @@ public class HiChat {
                 continue;
             }
 
+            if (command.contains("delete")) {
+                String[] splitCommand = command.split(" ");
+                int taskNumber = Integer.parseInt(splitCommand[1]);
+                System.out.println("____________________________________________________________\n" +
+                        " Noted. I've removed this task:\n" +
+                        "   " + listOfTasks.get(taskNumber - 1) + "\n" +
+                        " Now you have " + (listOfTasks.size() - 1) + " tasks in the list.\n" +
+                        "____________________________________________________________\n");
+                listOfTasks.remove(taskNumber - 1);
+                continue;
+            }
+
+
             if (command.contains("todo")) {
                 String[] splitCommand = command.split(" ");
                 int len = splitCommand.length;
