@@ -1,106 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import event.*;
 
 public class HiChat {
-    public static class task{
-        private String task;
-        private boolean isDone;
-
-
-        public task(String task){
-            this.task = task;
-            this.isDone = false;
-        }
-
-        public void markAsDone(){
-            this.isDone = true;
-        }
-
-        public String getTask(){
-            return this.task;
-        }
-
-        public boolean getIsDone(){
-            return this.isDone;
-        }
-
-        public String toString(){
-            if (this.isDone){
-                return "[X] " + this.task;
-            } else {
-                return "[ ] " + this.task;
-            }
-        }
-    }
-
-
-    public static class ToDo extends task{
-        public ToDo (String task){
-            super(task);
-        }
-
-        @Override
-        public String toString(){
-            if (super.isDone){
-                return "[T] "  + "[X] " + super.task;
-            } else {
-                return "[T] "  + "[ ] " + super.task;
-            }
-        }
-    }
-
-    public static class Deadline extends task{
-        private String deadline;
-
-        public Deadline(String task, String deadline){
-            super(task);
-            this.deadline = deadline;
-        }
-
-        public String getDeadline(){
-            return this.deadline;
-        }
-
-        @Override
-        public String toString(){
-            if (super.isDone){
-                return "[D] "  + "[X] " + super.task + " (by: " + this.deadline + ")";
-            } else {
-                return "[D] "  + "[ ] " + super.task + " (by: " + this.deadline + ")";
-            }
-        }
-    }
-
-    public static class Event extends task{
-        private String startTime;
-        private String endTime;
-
-        public Event(String task, String startTime, String endTime){
-            super(task);
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
-        public String getStartTime(){
-            return this.startTime;
-        }
-
-        public String getEndTime(){
-            return this.endTime;
-        }
-
-        @Override
-        public String toString(){
-            if (super.isDone){
-                return "[E] "  + "[X] " + super.task + " (from: " + this.startTime + " to: " + this.endTime + ")";
-            } else {
-                return "[E] "  + "[ ] " + super.task + " (from: " + this.startTime + " to: " + this.endTime + ")";
-            }
-        }
-
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String logo = " __    __   __    ______  __    __       ___   .___________.\n"
@@ -116,7 +19,7 @@ public class HiChat {
 
 
 
-        List<task> listOfTasks = new ArrayList<task>();
+        List<Task> listOfTasks = new ArrayList<Task>();
 //        String[] listOfTasks = new String[100];
 
         while (true) {
@@ -153,7 +56,7 @@ public class HiChat {
             if (command.contains("unmark")) {
                 String[] splitCommand = command.split(" ");
                 int taskNumber = Integer.parseInt(splitCommand[1]);
-                listOfTasks.get(taskNumber - 1).isDone = false;
+                listOfTasks.get(taskNumber - 1).markAsUndone();
                 System.out.println("____________________________________________________________\n" +
                         " OK, I've marked this task as not done yet:\n" +
                         "   " + listOfTasks.get(taskNumber - 1) + "\n" +
@@ -212,7 +115,7 @@ public class HiChat {
                         deadline += splitCommand[i] + " ";
                     }
                 }
-                task newTask = new Deadline(task, deadline);
+                Task newTask = new Deadline(task, deadline);
                 listOfTasks.add(newTask);
             }
 
@@ -246,7 +149,7 @@ public class HiChat {
                         endTime += splitCommand[i] + " ";
                     }
                 }
-                task newTask = new Event(task, startTime, endTime);
+                Task newTask = new Event(task, startTime, endTime);
                 listOfTasks.add(newTask);
             }
 
