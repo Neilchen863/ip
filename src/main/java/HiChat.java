@@ -1,7 +1,10 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import event.*;
+import java.io.File;
 
 public class HiChat {
     public static void main(String[] args) {
@@ -19,8 +22,9 @@ public class HiChat {
 
 
 
-        List<Task> listOfTasks = new ArrayList<Task>();
-//        String[] listOfTasks = new String[100];
+        List<Task> listOfTasks = new ArrayList<>();
+        readListFromFile(listOfTasks);
+
 
         while (true) {
             String command = scanner.nextLine();
@@ -50,6 +54,7 @@ public class HiChat {
                         " Nice! I've marked this task as done:\n" +
                         "   " + listOfTasks.get(taskNumber - 1) + "\n" +
                         "____________________________________________________________\n");
+                writeListToFile(listOfTasks);
                 continue;
             }
 
@@ -61,6 +66,7 @@ public class HiChat {
                         " OK, I've marked this task as not done yet:\n" +
                         "   " + listOfTasks.get(taskNumber - 1) + "\n" +
                         "____________________________________________________________\n");
+                writeListToFile(listOfTasks);
                 continue;
             }
 
@@ -73,6 +79,7 @@ public class HiChat {
                         " Now you have " + (listOfTasks.size() - 1) + " tasks in the list.\n" +
                         "____________________________________________________________\n");
                 listOfTasks.remove(taskNumber - 1);
+                writeListToFile(listOfTasks);
                 continue;
             }
 
@@ -97,6 +104,7 @@ public class HiChat {
                 }
 
                 listOfTasks.add(new ToDo(task));
+                writeListToFile(listOfTasks);
             }
 
             else if (command.contains("deadline")) {
@@ -117,6 +125,7 @@ public class HiChat {
                 }
                 Task newTask = new Deadline(task, deadline);
                 listOfTasks.add(newTask);
+                writeListToFile(listOfTasks);
             }
 
             else if (command.contains("event")) {
@@ -151,6 +160,7 @@ public class HiChat {
                 }
                 Task newTask = new Event(task, startTime, endTime);
                 listOfTasks.add(newTask);
+                writeListToFile(listOfTasks);
             }
 
             else {
@@ -169,4 +179,63 @@ public class HiChat {
 
         scanner.close();
     }
+
+    private static void writeListToFile(List<Task> listOfTasks) {
+        try {
+            File file = new File("data/hiChat.txt");
+            FileWriter fileWriter = new FileWriter(file);
+            for (Task task : listOfTasks) {
+                fileWriter.write(task.toString() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    private static void readListFromFile(List<Task> listOfTasks) {
+        try {
+            File file = new File("data/hiChat.txt");
+            Scanner fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String data = fileReader.nextLine();
+                String[] splitData = data.split(" ");
+                if (splitData[0].equals("[T]")) {
+                    if (splitData[1].equals("[X]")) {
+                        listOfTasks.add(new ToDo(data.substring(8)));
+                        listOfTasks.get(listOfTasks.size() - 1).markAsDone();
+                    } else {
+                        listOfTasks.add(new ToDo(data.substring(8)));
+                    }
+                } else if (splitData[0].equals("[D]")) {
+                    if (splitData[1].equals("[X]")) {
+                        listOfTasks.add(new Deadline(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 5, data.length() - 1)));
+                        listOfTasks.get(listOfTasks.size() - 1).markAsDone();
+                    } else {
+                        listOfTasks.add(new Deadline(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 5, data.length() - 1)));
+                    }
+                } else if (splitData[0].equals("[E]")) {
+                    if (splitData[1].equals("[X]")) {
+                        listOfTasks.add(new Event(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 6, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
+                        listOfTasks.get(listOfTasks.size() - 1).markAsDone();
+                    } else {
+                        listOfTasks.add(new Event(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 6, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
+                    }
+                }
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
 }
