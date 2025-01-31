@@ -1,4 +1,4 @@
-[T] [X] book 
-[E] [ ] project meeting  (from:      Mon 2pm  to: 4pm )
-[D] [ ] return book      (by: Dec 2 2019 18:00)
-[T] [ ] fuck u 
+[T] [X] 
+[E] [ ] project meeting  (from:       Mon 2pm  to: 4pm )
+[D] [ ] return book       (by: Dec 2 2019 18:00)
+
