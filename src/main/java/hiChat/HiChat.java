@@ -1,10 +1,10 @@
-import java.io.FileWriter;
-import java.io.IOException;
+package hiChat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import event.*;
-import java.io.File;
+import hiChat.event.*;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
@@ -19,9 +19,9 @@ public class HiChat {
         Storage.readListFromFile(listOfTasks);
 
 //
-//        TaskList taskList = new TaskList();
+//        hiChat.TaskList taskList = new hiChat.TaskList();
 //        List<Task> listOfTasks = taskList.getListOfTasks();
-//        Storage.readListFromFile(listOfTasks);
+//        hiChat.Storage.readListFromFile(listOfTasks);
 
         while (true) {
             String command = scanner.nextLine();

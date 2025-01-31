@@ -1,4 +1,4 @@
-package event;
+package hiChat.event;
 
 public  class Task {
     private String task;

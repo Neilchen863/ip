@@ -1,7 +1,9 @@
-import event.Deadline;
-import event.Event;
-import event.Task;
-import event.ToDo;
+package hiChat;
+
+import hiChat.event.Deadline;
+import hiChat.event.Event;
+import hiChat.event.Task;
+import hiChat.event.ToDo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

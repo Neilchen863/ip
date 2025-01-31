@@ -1,5 +1,4 @@
-package event;
-import java.sql.Time;
+package hiChat.event;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 

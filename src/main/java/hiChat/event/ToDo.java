@@ -1,4 +1,4 @@
-package event;
+package hiChat.event;
 
 public  class ToDo extends Task{
     public ToDo (String task){
