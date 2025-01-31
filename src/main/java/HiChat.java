@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import event.*;
 import java.io.File;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class HiChat {
     public static void main(String[] args) {
@@ -110,19 +112,28 @@ public class HiChat {
             else if (command.contains("deadline")) {
                 String[] splitCommand = command.split(" ");
                 String task = "";
-                String deadline = "";
+                String ddl = "";
                 boolean isTask = true;
+                boolean isDdl = false;
+
                 for (int i = 1; i < splitCommand.length; i++) {
                     if (splitCommand[i].equals("/by")) {
                         isTask = false;
+                        isDdl = true;
                         continue;
                     }
+
                     if (isTask) {
                         task += splitCommand[i] + " ";
-                    } else {
-                        deadline += splitCommand[i] + " ";
+                    } else if (isDdl) {
+                        ddl += splitCommand[i] + " ";
                     }
                 }
+
+                // Ensure correct date format
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                LocalDateTime deadline = LocalDateTime.parse(ddl.trim(), formatter);
+
                 Task newTask = new Deadline(task, deadline);
                 listOfTasks.add(newTask);
                 writeListToFile(listOfTasks);
@@ -202,19 +213,38 @@ public class HiChat {
                 String data = fileReader.nextLine();
                 String[] splitData = data.split(" ");
                 if (splitData[0].equals("[T]")) {
-                    if (splitData[1].equals("[X]")) {
-                        listOfTasks.add(new ToDo(data.substring(8)));
-                        listOfTasks.get(listOfTasks.size() - 1).markAsDone();
-                    } else {
-                        listOfTasks.add(new ToDo(data.substring(8)));
+                    String task = "";
+                    for (int i = 3; i < splitData.length; i++) {
+                        task += splitData[i] + " ";
                     }
+                    Task newTask = new ToDo(task);
+                    if (splitData[1].equals("[X]")) {
+                        newTask.markAsDone();
+                    }
+                    listOfTasks.add(newTask);
                 } else if (splitData[0].equals("[D]")) {
-                    if (splitData[1].equals("[X]")) {
-                        listOfTasks.add(new Deadline(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 5, data.length() - 1)));
-                        listOfTasks.get(listOfTasks.size() - 1).markAsDone();
-                    } else {
-                        listOfTasks.add(new Deadline(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 5, data.length() - 1)));
+                    String task = "";
+                    String ddl = "";
+                    int positionOfBy = 0;
+                    for (int i = 3; i < splitData.length - 1; i++) {
+                        if (!splitData[i].equals("(by:")) {
+                            task += splitData[i] + " ";
+                            positionOfBy = i;
+                        } else {
+                            break;
+                        }
                     }
+                    for (int i = positionOfBy + 2; i < splitData.length; i++) {
+                        ddl += splitData[i] + " ";
+                    }
+                    ddl = ddl.replace("(", "").replace(")", "").trim();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+                    LocalDateTime deadline = LocalDateTime.parse(ddl, formatter);
+                    Task newTask = new Deadline(task, deadline);
+                    if (splitData[1].equals("[X]")) {
+                        newTask.markAsDone();
+                    }
+                    listOfTasks.add(newTask);
                 } else if (splitData[0].equals("[E]")) {
                     if (splitData[1].equals("[X]")) {
                         listOfTasks.add(new Event(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 6, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
@@ -230,7 +260,6 @@ public class HiChat {
             e.printStackTrace();
         }
     }
-
 
 
 

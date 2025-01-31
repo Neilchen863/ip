@@ -1,23 +1,26 @@
 package event;
+import java.sql.Time;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
-    private String deadline;
+    private LocalDateTime deadline;
 
-    public Deadline(String task, String deadline){
+    public Deadline(String task, LocalDateTime deadline){
         super(task);
         this.deadline = deadline;
     }
 
-    public String getDeadline(){
+    public LocalDateTime getDeadline(){
         return this.deadline;
     }
 
     @Override
     public String toString(){
         if (super.getIsDone()){
-            return "[D] "  + "[X] " + super.getTask() + " (by: " + this.deadline + ")";
+            return "[D] "  + "[X] " + super.getTask() + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
         } else {
-            return "[D] "  + "[ ] " + super.getTask() + " (by: " + this.deadline + ")";
+            return "[D] "  + "[ ] " + super.getTask() + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
         }
     }
 }
