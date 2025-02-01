@@ -93,4 +93,13 @@ public class Parser {
     public static boolean isEventTask(String input){
         return firstWord(input).equals("event");
     }
+
+    /**
+     * Check if the input string is "find"
+     * @param input
+     * @return true if the input string is "find"
+     */
+    public static boolean isFindTask(String input){
+        return firstWord(input).equals("find");
+    }
 }
