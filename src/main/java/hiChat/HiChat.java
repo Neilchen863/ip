@@ -88,6 +88,7 @@ public class HiChat {
 
                 listOfTasks.add(new ToDo(task));
                 Storage.writeListToFile(listOfTasks);
+                Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
             }
 
             else if (Parser.isDeadlineTask(command)) {
@@ -118,6 +119,7 @@ public class HiChat {
                 Task newTask = new Deadline(task, deadline);
                 listOfTasks.add(newTask);
                 Storage.writeListToFile(listOfTasks);
+                Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
             }
 
             else if (Parser.isEventTask(command)) {
@@ -153,6 +155,19 @@ public class HiChat {
                 Task newTask = new Event(task, startTime, endTime);
                 listOfTasks.add(newTask);
                 Storage.writeListToFile(listOfTasks);
+                Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
+            }
+
+            else if (Parser.isFindTask(command)) {
+                String[] splitCommand = command.split(" ");
+                String keyword = splitCommand[1];
+                List<Task> foundTasks = new ArrayList<>();
+                for (Task task : listOfTasks) {
+                    if (task.getTask().contains(keyword)) {
+                        foundTasks.add(task);
+                    }
+                }
+                Ui.printFoundTasks(foundTasks);
             }
 
             else {
@@ -160,7 +175,7 @@ public class HiChat {
                 continue;
             }
 
-            Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
+
         }
 
         scanner.close();
