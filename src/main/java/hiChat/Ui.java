@@ -1,7 +1,6 @@
 package hiChat;
 
 import hiChat.event.Task;
-
 import java.util.List;
 
 public class Ui {
