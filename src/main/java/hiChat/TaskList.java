@@ -9,6 +9,10 @@ public class TaskList {
     public TaskList(){
     }
 
+    /**
+     * Constructor for TaskList
+     * @param listOfTasks List of tasks
+     */
     public TaskList(List<Task> listOfTasks){
         this.listOfTasks = listOfTasks;
     }
@@ -21,6 +25,10 @@ public class TaskList {
         this.listOfTasks.add(task);
     }
 
+    /**
+     * Removes a task from the list of tasks
+     * @param index Index of the task to be removed
+     */
     public void removeTask(int index){
         this.listOfTasks.remove(index);
     }

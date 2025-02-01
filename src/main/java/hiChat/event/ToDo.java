@@ -5,6 +5,7 @@ public  class ToDo extends Task{
         super(task);
     }
 
+    // Setter for task
     @Override
     public String toString(){
         if (super.getIsDone()){

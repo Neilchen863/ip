@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Storage {
+    /**
+     * Writes the list of tasks to a file.
+     *
+     * @param listOfTasks List of tasks to be written to file.
+     */
     public static void writeListToFile(List<Task> listOfTasks) {
         try {
             File file = new File("data/hiChat.txt");
@@ -27,6 +32,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads the list of tasks from a file.
+     *
+     * @param listOfTasks List of tasks to be read from file.
+     */
     public static void readListFromFile(List<Task> listOfTasks) {
         try {
             File file = new File("data/hiChat.txt");
