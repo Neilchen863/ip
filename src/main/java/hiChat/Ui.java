@@ -98,4 +98,26 @@ public class Ui {
         System.out.println(
                 "____________________________________________________________");
     }
+
+    public static String getMarkedAsUndoneMessage(Task task) {
+        return "OK, I've marked this task as not done yet:\n" +
+                "   " + task;
+    }
+
+    public static String getMarkedAsDoneMessage(Task task) {
+        return "Nice! I've marked this task as done:\n" +
+                "   " + task;
+    }
+
+    public static String getListString(List<Task> listOfTasks) {
+        String listString = "Here are the tasks in your list:\n";
+        for (int i = 0; i < listOfTasks.size(); i++) {
+            listString += (i + 1) + ". " + listOfTasks.get(i) + "\n";
+        }
+        return listString;
+    }
+
+    public static String getFarewellMessage() {
+        return "Bye. Hope to see you again soon!";
+    }
 }
