@@ -26,7 +26,8 @@ public class HiChat {
             return Ui.getListString(listOfTasks);
         }
 
-        if (Parser.firstWord(command).equals("done")) {
+        switch (Parser.firstWord(command)) {
+        case "done" -> {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
@@ -36,8 +37,7 @@ public class HiChat {
             Storage.writeListToFile(listOfTasks);
             return Ui.getMarkedAsDoneMessage(listOfTasks.get(taskNumber));
         }
-
-        if (Parser.firstWord(command).equals("undone")) {
+        case "undone" -> {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
@@ -47,8 +47,7 @@ public class HiChat {
             Storage.writeListToFile(listOfTasks);
             return Ui.getMarkedAsUndoneMessage(listOfTasks.get(taskNumber));
         }
-
-        if (Parser.firstWord(command).equals("delete")) {
+        case "delete" -> {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
@@ -59,6 +58,7 @@ public class HiChat {
             return "Noted. I've removed this task:\n" +
                     "   " + removedTask + "\n" +
                     "Now you have " + listOfTasks.size() + " tasks in the list.";
+        }
         }
 
         if (Parser.isToDoTask(command)) {
@@ -204,12 +204,16 @@ public class HiChat {
             if (Parser.firstWord(command).equals("delete")) {
                 String[] splitCommand = command.split(" ");
                 int taskNumber = Integer.parseInt(splitCommand[1]);
+                int numOfTasks = listOfTasks.size();
                 System.out.println("____________________________________________________________\n" +
                         " Noted. I've removed this task:\n" +
                         "   " + listOfTasks.get(taskNumber - 1) + "\n" +
                         " Now you have " + (listOfTasks.size() - 1) + " tasks in the list.\n" +
                         "____________________________________________________________\n");
                 listOfTasks.remove(taskNumber - 1);
+
+                assert listOfTasks.size() == numOfTasks - 1;
+
                 Storage.writeListToFile(listOfTasks);
                 continue;
             }
@@ -221,6 +225,7 @@ public class HiChat {
                 String errorMsg = "____________________________________________________________\n" +
                         "☹ OOPS!!! The description of a todo cannot be empty." + "\n" +
                         "____________________________________________________________\n";
+                int numOfTasks = listOfTasks.size();
                 try {
                     if (len == 1) {
                         throw new Exception(errorMsg);
@@ -236,6 +241,9 @@ public class HiChat {
 
                 listOfTasks.add(new ToDo(task));
                 Storage.writeListToFile(listOfTasks);
+
+                assert listOfTasks.size() == numOfTasks - 1;
+
                 Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
             }
 
@@ -245,6 +253,7 @@ public class HiChat {
                 String ddl = "";
                 boolean isTask = true;
                 boolean isDdl = false;
+                int numOfTasks = listOfTasks.size();
 
                 for (int i = 1; i < splitCommand.length; i++) {
                     if (splitCommand[i].equals("/by")) {
@@ -267,6 +276,9 @@ public class HiChat {
                 Task newTask = new Deadline(task, deadline);
                 listOfTasks.add(newTask);
                 Storage.writeListToFile(listOfTasks);
+
+                assert listOfTasks.size() == numOfTasks - 1;
+
                 Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
             }
 
@@ -278,6 +290,7 @@ public class HiChat {
                 boolean isTask = true;
                 boolean isStartTime = false;
                 boolean isEndTime = false;
+                int numOfTasks = listOfTasks.size();
 
                 for (int i = 1; i < splitCommand.length; i++) {
                     if (splitCommand[i].equals("/from")) {
@@ -300,9 +313,13 @@ public class HiChat {
                         endTime += splitCommand[i] + " ";
                     }
                 }
+
                 Task newTask = new Event(task, startTime, endTime);
                 listOfTasks.add(newTask);
                 Storage.writeListToFile(listOfTasks);
+
+                assert listOfTasks.size() == numOfTasks - 1;
+
                 Ui.printAddedTask(listOfTasks.get(listOfTasks.size() - 1), listOfTasks);
             }
 
