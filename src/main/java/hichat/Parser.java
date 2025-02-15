@@ -1,4 +1,4 @@
-package hiChat;
+package hichat;
 
 public class Parser {
     public Parser(){

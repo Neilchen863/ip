@@ -1,4 +1,4 @@
-package hiChat.event;
+package hichat.event;
 
 public class Event extends Task{
     private String startTime;

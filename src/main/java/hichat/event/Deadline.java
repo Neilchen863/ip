@@ -1,4 +1,4 @@
-package hiChat.event;
+package hichat.event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

@@ -1,6 +1,6 @@
-package hiChat;
+package hichat;
 
-import hiChat.event.Task;
+import hichat.event.Task;
 import java.util.List;
 
 public class TaskList {
