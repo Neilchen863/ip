@@ -38,4 +38,7 @@ public  class Task {
         }
     }
 
+    public void reshedule(String newTime) {
+        this.task = newTime;
+    }
 }

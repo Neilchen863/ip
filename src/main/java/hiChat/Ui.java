@@ -120,4 +120,11 @@ public class Ui {
     public static String getFarewellMessage() {
         return "Bye. Hope to see you again soon!";
     }
+
+    public static void printResheduledTask(Task task) {
+        System.out.println("____________________________________________________________\n" +
+                " Got it. I've rescheduled this task:\n" +
+                "   " + task + "\n" +
+                "____________________________________________________________\n");
+    }
 }

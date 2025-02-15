@@ -102,4 +102,9 @@ public class Parser {
     public static boolean isFindTask(String input){
         return firstWord(input).equals("find");
     }
+
+    public static boolean isReshedule(String command) {
+        return firstWord(command).equals("reshedule");
+    }
+
 }

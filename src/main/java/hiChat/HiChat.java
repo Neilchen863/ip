@@ -162,15 +162,6 @@ public class HiChat {
         Scanner scanner = new Scanner(System.in);
         Ui.printGreeting();
 
-
-
-
-
-//
-//        hiChat.TaskList taskList = new hiChat.TaskList();
-//        List<Task> listOfTasks = taskList.getListOfTasks();
-//        hiChat.Storage.readListFromFile(listOfTasks);
-
         while (true) {
             String command = scanner.nextLine();
             if (Parser.isBye(command)) {
@@ -316,6 +307,15 @@ public class HiChat {
                     }
                 }
                 Ui.printFoundTasks(foundTasks);
+            }
+
+            else if (Parser.isReshedule(command)) {
+                String[] splitCommand = command.split(" ");
+                int taskNumber = Integer.parseInt(splitCommand[1]);
+                String newTime = splitCommand[2];
+                listOfTasks.get(taskNumber - 1).reshedule(newTime);
+                Ui.printResheduledTask(listOfTasks.get(taskNumber - 1));
+                Storage.writeListToFile(listOfTasks);
             }
 
             else {
