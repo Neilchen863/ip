@@ -75,17 +75,4 @@ public class Parser {
     public static boolean isEventTask(String input){
         return firstWord(input).equals("event");
     }
-
-    /**
-     * Check if the input string is "find"
-     * @return true if the input string is "find"
-     */
-    public static boolean isFindTask(String input){
-        return firstWord(input).equals("find");
-    }
-
-    public static boolean isReshedule(String command) {
-        return firstWord(command).equals("reshedule");
-    }
-
 }
