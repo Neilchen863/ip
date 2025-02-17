@@ -17,19 +17,5 @@ public class TaskList {
         this.listOfTasks = listOfTasks;
     }
 
-    public List<Task> getListOfTasks(){
-        return this.listOfTasks;
-    }
 
-    public void addTask(Task task){
-        this.listOfTasks.add(task);
-    }
-
-    /**
-     * Removes a task from the list of tasks
-     * @param index Index of the task to be removed
-     */
-    public void removeTask(int index){
-        this.listOfTasks.remove(index);
-    }
 }
