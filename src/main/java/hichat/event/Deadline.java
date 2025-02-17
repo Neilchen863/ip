@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
-    private LocalDateTime deadline;
+    private final LocalDateTime deadline;
 
 
     public Deadline(String task, LocalDateTime deadline){

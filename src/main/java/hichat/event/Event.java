@@ -1,21 +1,13 @@
 package hichat.event;
 
 public class Event extends Task{
-    private String startTime;
-    private String endTime;
+    private final String startTime;
+    private final String endTime;
 
     public Event(String task, String startTime, String endTime){
         super(task);
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    public String getStartTime(){
-        return this.startTime;
-    }
-
-    public String getEndTime(){
-        return this.endTime;
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 public class HiChat {
     private static List<Task> listOfTasks;
 
-    // 构造方法，初始化任务列表
     public HiChat() {
         listOfTasks = new ArrayList<>();
         Storage.readListFromFile(listOfTasks);
