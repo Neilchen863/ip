@@ -1,9 +1,16 @@
-package hiChat;
+package hichat;
 
-import hiChat.event.Task;
+import hichat.event.Task;
 import java.util.List;
 
 public class Ui {
+    private final String logo = " __    __   __    ______  __    __       ___   .___________.\n"
+            + "|  |  |  | |  |  /      ||  |  |  |     /   \\  |           |\n"
+            + "|  |__|  | |  | |  ,----'|  |__|  |    /  ^  \\ `---|  |----`\n"
+            + "|   __   | |  | |  |     |   __   |   /  /_\\  \\    |  |     \n"
+            + "|  |  |  | |  | |  `----.|  |  |  |  /  _____  \\   |  |     \n"
+            + "|__|  |__| |__|  \\______||__|  |__| /__/     \\__\\  |__|     \n";
+
     public static void printGreeting() {
         String logo = " __    __   __    ______  __    __       ___   .___________.\n"
                 + "|  |  |  | |  |  /      ||  |  |  |     /   \\  |           |\n"
@@ -119,5 +126,12 @@ public class Ui {
 
     public static String getFarewellMessage() {
         return "Bye. Hope to see you again soon!";
+    }
+
+    public static void printResheduledTask(Task task) {
+        System.out.println("____________________________________________________________\n" +
+                " Got it. I've rescheduled this task:\n" +
+                "   " + task + "\n" +
+                "____________________________________________________________\n");
     }
 }

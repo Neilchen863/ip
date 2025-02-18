@@ -1,6 +1,5 @@
-package hiChat;
+package hichat;
 
-import hiChat.event.Task;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

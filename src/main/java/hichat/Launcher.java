@@ -1,4 +1,4 @@
-package hiChat;
+package hichat;
 
 import javafx.application.Application;
 
