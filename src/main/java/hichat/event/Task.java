@@ -1,4 +1,4 @@
-package hiChat.event;
+package hichat.event;
 
 public  class Task {
     private String task;
@@ -38,4 +38,7 @@ public  class Task {
         }
     }
 
+    public void reshedule(String newTime) {
+        this.task = newTime;
+    }
 }
