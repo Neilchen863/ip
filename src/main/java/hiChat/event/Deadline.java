@@ -1,14 +1,20 @@
-package hichat.event;
+package hiChat.event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
-    private final LocalDateTime deadline;
+    private LocalDateTime deadline;
+
 
     public Deadline(String task, LocalDateTime deadline){
         super(task);
         this.deadline = deadline;
     }
+
+    public LocalDateTime getDeadline(){
+        return this.deadline;
+    }
+
 
     @Override
     public String toString(){

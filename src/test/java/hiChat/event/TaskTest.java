@@ -1,4 +1,4 @@
-package hichat.event;
+package hiChat.event;
 
 import org.junit.jupiter.api.Test;
 

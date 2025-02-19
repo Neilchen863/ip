@@ -1,4 +1,4 @@
-package hichat;
+package hiChat;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
