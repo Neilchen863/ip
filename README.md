@@ -1,26 +1,41 @@
-# hichat.HiChat project template
+# HiChat Project Template
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Welcome to **HiChat**, a Java-based chatbot application designed to provide a smart and engaging conversation experience. This project serves as a template for a greenfield Java project.
 
-## Setting up in Intellij
+## Setting Up in IntelliJ
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+### Prerequisites
+- **JDK 17** (Ensure no other versions are used)
+- **Latest IntelliJ IDEA version**
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/hichat.HiChat.java` file, right-click it, and choose `Run hichat.HiChat.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+### Steps to Set Up
+1. **Open IntelliJ IDEA**
+   - If you have an existing project open, click `File` > `Close Project` first.
+2. **Import HiChat into IntelliJ**
+   - Click `Open` and select the project directory.
+   - Click `OK` and accept any further prompts with default settings.
+3. **Configure JDK 17**
+   - Follow [this guide](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to set JDK 17.
+   - In the same dialog, set the **Project language level** to `SDK default`.
+4. **Run HiChat**
+   - Locate `src/main/java/hichat/HiChat.java`.
+   - Right-click the file and choose `Run HiChat.main()`.
+   - If there are compilation errors, restart IntelliJ and try again.
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+If the setup is successful, you should see an output like this:
+```
+Hello from
+ __    __   __    ______  __    __       ___    .___________.
+|  |  |  | |  |  /      ||  |  |  |     /   \\  |           |
+|  |__|  | |  | |  ,----'|  |__|  |    /  ^  \\ `---|  |----`
+|   __   | |  | |  |     |   __   |   /  /_\  \\    |  |     
+|  |  |  | |  | |  `----.|  |  |  |  /  _____  \\   |  |     
+|__|  |__| |__| \\______||__|  |__| /__/     \__\\  |__|     
+```
+
+### Important Notes
+- Keep the `src/main/java` folder structure intact.
+- Avoid renaming or moving Java files outside of this path, as build tools like Gradle expect this structure.
+
+Now you're all set to start developing **HiChat**! 🚀
+
