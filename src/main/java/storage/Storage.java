@@ -111,7 +111,6 @@ public class Storage {
         }
     }
 
-
     /**
      * Formats a task to a string that can be saved to the file.
      *

@@ -72,9 +72,9 @@ public class TaskList {
             ui.showMessage("No tasks available.");
         } else {
             ui.showMessage("Here are the tasks in your list:");
-            tasks.stream()
-                    .map(task -> (tasks.indexOf(task) + 1) + ". " + task)
-                    .forEach(ui::showMessage);
+            for (int i = 0; i < tasks.size(); i++) {
+                ui.showMessage((i + 1) + ". " + tasks.get(i));
+            }
         }
     }
 
