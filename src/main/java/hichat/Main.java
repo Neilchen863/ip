@@ -96,6 +96,18 @@ public class Main extends Application {
                 DialogBox.getUserDialog(userText, userImage),
                 DialogBox.getDukeDialog(dukeText, dukeImage)
         );
+        if (userText.equals("bye")) {
+            // Close the window after 2 second
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            System.exit(0);
+                        }
+                    },
+                    1000
+            );
+        }
         userInput.clear();
     }
 }

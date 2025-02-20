@@ -20,7 +20,7 @@ public class Storage {
      */
     public static void writeListToFile(List<Task> listOfTasks) {
         try {
-            File file = new File("data/hiChat.txt");
+            File file = new File("./data/hiChat.txt");
             FileWriter fileWriter = new FileWriter(file);
             for (Task task : listOfTasks) {
                 fileWriter.write(task.toString() + "\n");
@@ -39,7 +39,19 @@ public class Storage {
      */
     public static void readListFromFile(List<Task> listOfTasks) {
         try {
+            // 创建 data 目录，如果不存在
+            File dir = new File("data");
+            if (!dir.exists()) {
+                dir.mkdirs();  // 创建 data 目录
+            }
+
             File file = new File("data/hiChat.txt");
+
+            // 如果文件不存在，创建该文件
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
             Scanner fileReader = new Scanner(file);
             while (fileReader.hasNextLine()) {
                 String data = fileReader.nextLine();
@@ -90,6 +102,8 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            //create the file if it does not exist
+
         }
     }
 

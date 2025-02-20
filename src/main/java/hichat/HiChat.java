@@ -157,4 +157,7 @@ public class HiChat {
         return "Sorry, I don't understand that command.";
     }
 
+    public static void main(String[] args) {
+        new HiChat();
+    }
 }

@@ -47,12 +47,15 @@ test {
 }
 
 application {
-    mainClass.set("hiChat.HiChat")
+    mainClass.set("hichat.Launcher")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "hiChat"
     archiveClassifier = null
+    manifest {
+        attributes "Main-Class": "hichat.HiChat"
+    }
 }
 
 run{
