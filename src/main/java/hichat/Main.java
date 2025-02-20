@@ -54,7 +54,7 @@ public class Main extends Application {
         //More code to be added here later
         //Formatting the window to look as expected
 
-        stage.setTitle("Duke");
+        stage.setTitle("HiChat");
         stage.setResizable(false);
         stage.setMinHeight(600.0);
         stage.setMinWidth(400.0);
@@ -83,6 +83,10 @@ public class Main extends Application {
 
         //Scroll down to the end every time dialogContainer's height changes.
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog("Hello! I'm HiChat\nWhat can I do for you today?", dukeImage)
+        );
     }
 
     private void handleUserInput() {

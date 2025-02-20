@@ -8,40 +8,58 @@ import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
+
 
 public class DialogBox extends HBox {
-
     private Label text;
     private ImageView displayPicture;
 
-    public DialogBox(String s, Image i) {
+    public DialogBox(String s, Image i, boolean isUser, boolean isError) {
         text = new Label(s);
         displayPicture = new ImageView(i);
 
-        //Styling the dialog box
+        // Styling chat bubbles
         text.setWrapText(true);
-        displayPicture.setFitWidth(100.0);
-        displayPicture.setFitHeight(100.0);
-        this.setAlignment(Pos.TOP_RIGHT);
+        text.setPadding(new Insets(10));
+        text.setStyle("-fx-font-size: 14px; -fx-font-family: 'Segoe UI';");
 
-        this.getChildren().addAll(text, displayPicture);
-    }
+        // Set background colors
+        if (isError) {
+            text.setBackground(new Background(new BackgroundFill(Color.LIGHTCORAL, new CornerRadii(10), Insets.EMPTY)));
+        } else if (isUser) {
+            text.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(10), Insets.EMPTY)));
+        } else {
+            text.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        }
 
-    private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        FXCollections.reverse(tmp);
-        this.getChildren().setAll(tmp);
+        // Set image properties
+        displayPicture.setFitWidth(40);
+        displayPicture.setFitHeight(40);
+        displayPicture.setStyle("-fx-background-radius: 50;");
+
+        if (isUser) {
+            this.setAlignment(Pos.TOP_RIGHT);
+            this.getChildren().addAll(text, displayPicture);
+        } else {
+            this.setAlignment(Pos.TOP_LEFT);
+            this.getChildren().addAll(displayPicture, text);
+        }
     }
 
     public static DialogBox getUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+        return new DialogBox(s, i, true, false);
     }
 
     public static DialogBox getDukeDialog(String s, Image i) {
-        var db = new DialogBox(s, i);
-        db.flip();
-        return db;
+        return new DialogBox(s, i, false, false);
     }
 
+    public static DialogBox getErrorDialog(String s, Image i) {
+        return new DialogBox(s, i, false, true);
+    }
 }

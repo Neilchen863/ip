@@ -25,7 +25,7 @@ public class HiChat {
             return Ui.getListString(listOfTasks);
         }
 
-        if (Parser.firstWord(command).equals("done")) {
+        if (Parser.isMark(command)) {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
@@ -36,7 +36,7 @@ public class HiChat {
             return Ui.getMarkedAsDoneMessage(listOfTasks.get(taskNumber));
         }
 
-        if (Parser.firstWord(command).equals("undone")) {
+        if (Parser.isUnmark(command)) {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
