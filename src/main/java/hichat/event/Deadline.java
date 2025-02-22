@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
-    private final LocalDateTime deadline;
+    private LocalDateTime deadline;
 
     public Deadline(String task, LocalDateTime deadline){
         super(task);
@@ -12,10 +12,27 @@ public class Deadline extends Task{
 
     @Override
     public String toString(){
-        if (super.getIsDone()){
-            return "[D] "  + "[X] " + super.getTask() + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+        //consider if isdone and if is priority and is deadline
+        if (super.getIsPriority()){
+            if (super.getIsDone()){
+                return "[D] " + "[P] " + "[X] " + super.getTask() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+            } else {
+                return "[D] " + "[P] " + "[ ] " + super.getTask() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+            }
         } else {
-            return "[D] "  + "[ ] " + super.getTask() + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+            if (super.getIsDone()){
+                return "[D] " + "[ ] " + "[X] " + super.getTask() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+            } else {
+                return "[D] " + "[ ] " + "[ ] " + super.getTask() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+            }
         }
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 }

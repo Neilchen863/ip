@@ -47,7 +47,7 @@ public class HiChat {
             return Ui.getMarkedAsUndoneMessage(listOfTasks.get(taskNumber));
         }
 
-        if (Parser.firstWord(command).equals("delete")) {
+        if (Parser.isDelete(command)) {
             String[] splitCommand = command.split(" ");
             int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
             if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
@@ -152,6 +152,21 @@ public class HiChat {
             return "Got it. I've added this task:\n" +
                     "   " + listOfTasks.get(listOfTasks.size() - 1) + "\n" +
                     "Now you have " + listOfTasks.size() + " tasks in the list.";
+        }
+
+        if (Parser.isPrioritizeTask(command)) {
+            String[] splitCommand = command.split(" ");
+            int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
+            if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
+                return "☹ OOPS!!! Task number out of range.";
+            }
+            listOfTasks.get(taskNumber).setIsPriority(true);
+            // put it on top of the list
+            Task task = listOfTasks.remove(taskNumber);
+            listOfTasks.add(0, task);
+            Storage.writeListToFile(listOfTasks);
+            return "Noted. I've prioritized this task:\n" +
+                    "   " + listOfTasks.get(0);
         }
 
         return "Sorry, I don't understand that command.";

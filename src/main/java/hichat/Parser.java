@@ -75,4 +75,8 @@ public class Parser {
     public static boolean isEventTask(String input){
         return firstWord(input).equals("event");
     }
+
+    public static boolean isPrioritizeTask(String input){
+        return firstWord(input).equals("prioritize");
+    }
 }

@@ -8,10 +8,19 @@ public  class ToDo extends Task{
     // Setter for task
     @Override
     public String toString(){
-        if (super.getIsDone()){
-            return "[T] "  + "[X] " + super.getTask();
+        //consider if isdone and if is priority
+        if (super.getIsPriority()){
+            if (super.getIsDone()){
+                return "[T] " + "[P] " + "[X] " + super.getTask();
+            } else {
+                return "[T] " + "[P] " + "[ ] " + super.getTask();
+            }
         } else {
-            return "[T] "  + "[ ] " + super.getTask();
+            if (super.getIsDone()){
+                return "[T] " + "[ ] " + "[X] " + super.getTask();
+            } else {
+                return "[T] " + "[ ] " + "[ ] " + super.getTask();
+            }
         }
     }
 }

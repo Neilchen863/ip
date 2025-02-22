@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,15 +40,13 @@ public class Storage {
      */
     public static void readListFromFile(List<Task> listOfTasks) {
         try {
-            // 创建 data 目录，如果不存在
             File dir = new File("data");
             if (!dir.exists()) {
-                dir.mkdirs();  // 创建 data 目录
+                dir.mkdirs();
             }
 
             File file = new File("data/hiChat.txt");
 
-            // 如果文件不存在，创建该文件
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -65,36 +64,84 @@ public class Storage {
                     if (splitData[1].equals("[X]")) {
                         newTask.markAsDone();
                     }
+                    // check if task is priority
+                    if (splitData[2].equals("[P]")) {
+                        newTask.setIsPriority(true);
+                    }
                     listOfTasks.add(newTask);
                 } else if (splitData[0].equals("[D]")) {
-                    String task = "";
-                    String ddl = "";
-                    int positionOfBy = 0;
-                    for (int i = 3; i < splitData.length - 1; i++) {
-                        if (!splitData[i].equals("(by:")) {
-                            task += splitData[i] + " ";
-                            positionOfBy = i;
-                        } else {
+                    // Ensure splitData has enough elements
+                    if (splitData.length < 6) {
+                        throw new IllegalArgumentException("Invalid input format: " + String.join(" ", splitData));
+                    }
+
+                    // Extract task description (everything before "(by:")
+                    StringBuilder taskBuilder = new StringBuilder();
+                    int deadlineIndex = -1; // To locate "(by:"
+                    for (int i = 5; i < splitData.length; i++) {
+                        if (splitData[i].startsWith("(by:")) {
+                            deadlineIndex = i;
                             break;
                         }
+                        taskBuilder.append(splitData[i]).append(" ");
                     }
-                    for (int i = positionOfBy + 2; i < splitData.length; i++) {
-                        ddl += splitData[i] + " ";
+
+                    // Ensure deadline marker "(by:" exists
+                    if (deadlineIndex == -1) {
+                        throw new IllegalArgumentException("Missing deadline marker '(by:' in input: " + String.join(" ", splitData));
                     }
-                    ddl = ddl.replace("(", "").replace(")", "").trim();
+
+                    String task = taskBuilder.toString().trim();
+
+                    // Extract raw deadline part (after "(by:")
+                    StringBuilder ddlBuilder = new StringBuilder();
+                    for (int i = deadlineIndex + 1; i < splitData.length; i++) {
+                        ddlBuilder.append(splitData[i]).append(" ");
+                    }
+
+                    String ddl = ddlBuilder.toString().trim();
+
+                    // Ensure deadline format is valid
+                    if (ddl.endsWith(")")) {
+                        ddl = ddl.substring(0, ddl.length() - 1); // Remove closing ")"
+                    } else {
+                        throw new IllegalArgumentException("Unexpected deadline format: " + ddl);
+                    }
+
+
+
+                    // Define date format
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
-                    LocalDateTime deadline = LocalDateTime.parse(ddl, formatter);
+
+                    // Parse deadline
+                    LocalDateTime deadline;
+                    try {
+                        deadline = LocalDateTime.parse(ddl, formatter);
+                    } catch (DateTimeParseException e) {
+                        throw new IllegalArgumentException("Failed to parse deadline: " + ddl, e);
+                    }
+
+                    // Create task object
                     Task newTask = new Deadline(task, deadline);
-                    if (splitData[1].equals("[X]")) {
+
+                    // Check priority
+                    if (splitData[1].equals("[P]")) {
+                        newTask.setIsPriority(true);
+                    }
+
+                    // Check if marked as done
+                    if (splitData[2].equals("[X]")) {
                         newTask.markAsDone();
                     }
+
                     listOfTasks.add(newTask);
                 } else if (splitData[0].equals("[E]")) {
+                    listOfTasks.add(new Event(data.substring(12, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 7, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
+                    if (splitData[1].equals("[P]")) {
+                        listOfTasks.get(listOfTasks.size() - 1).setIsPriority(true);
+                    }
                     if (splitData[1].equals("[X]")) {
-                        listOfTasks.add(new Event(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 6, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
                         listOfTasks.get(listOfTasks.size() - 1).markAsDone();
-                    } else {
-                        listOfTasks.add(new Event(data.substring(8, data.indexOf("(") - 1), data.substring(data.indexOf("(") + 6, data.indexOf("to") - 1), data.substring(data.indexOf("to") + 4, data.length() - 1)));
                     }
                 }
             }
@@ -102,8 +149,6 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
-            //create the file if it does not exist
-
         }
     }
 
