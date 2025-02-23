@@ -79,4 +79,8 @@ public class Parser {
     public static boolean isPrioritizeTask(String input){
         return firstWord(input).equals("prioritize");
     }
+
+    public static boolean isUnPrioritizeTask(String input){
+        return firstWord(input).equals("unprioritize");
+    }
 }

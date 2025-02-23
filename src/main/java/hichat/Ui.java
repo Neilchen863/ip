@@ -116,7 +116,7 @@ public class Ui {
                 "   " + task;
     }
 
-    public static String getListString(List<Task> listOfTasks) {
+    public static String getListString(TaskList listOfTasks) {
         String listString = "Here are the tasks in your list:\n";
         for (int i = 0; i < listOfTasks.size(); i++) {
             listString += (i + 1) + ". " + listOfTasks.get(i) + "\n";

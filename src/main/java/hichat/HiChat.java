@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HiChat {
-    private static List<Task> listOfTasks;
+    private static TaskList listOfTasks;
 
     public HiChat() {
-        listOfTasks = new ArrayList<>();
+        listOfTasks = new TaskList();
         Storage.readListFromFile(listOfTasks);
     }
 
@@ -167,6 +167,18 @@ public class HiChat {
             Storage.writeListToFile(listOfTasks);
             return "Noted. I've prioritized this task:\n" +
                     "   " + listOfTasks.get(0);
+        }
+
+        if (Parser.isUnPrioritizeTask(command)) {
+            String[] splitCommand = command.split(" ");
+            int taskNumber = Integer.parseInt(splitCommand[1]) - 1;
+            if (taskNumber < 0 || taskNumber >= listOfTasks.size()) {
+                return "☹ OOPS!!! Task number out of range.";
+            }
+            listOfTasks.get(taskNumber).setIsPriority(false);
+            Storage.writeListToFile(listOfTasks);
+            return "Noted. I've un-prioritized this task:\n" +
+                    "   " + listOfTasks.get(taskNumber);
         }
 
         return "Sorry, I don't understand that command.";

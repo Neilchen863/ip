@@ -19,12 +19,19 @@ public class Storage {
      *
      * @param listOfTasks List of tasks to be written to file.
      */
-    public static void writeListToFile(List<Task> listOfTasks) {
+    public static void writeListToFile(TaskList listOfTasks) {
         try {
             File file = new File("./data/hiChat.txt");
             FileWriter fileWriter = new FileWriter(file);
-            for (Task task : listOfTasks) {
-                fileWriter.write(task.toString() + "\n");
+            for (int i = 0; i < listOfTasks.size(); i++) {
+                Task task = listOfTasks.get(i);
+                if (task instanceof ToDo) {
+                    fileWriter.write(task.toString() + "\n");
+                } else if (task instanceof Deadline) {
+                    fileWriter.write(task.toString() + "\n");
+                } else if (task instanceof Event) {
+                    fileWriter.write(task.toString() + "\n");
+                }
             }
             fileWriter.close();
         } catch (IOException e) {
@@ -38,7 +45,7 @@ public class Storage {
      *
      * @param listOfTasks List of tasks to be read from file.
      */
-    public static void readListFromFile(List<Task> listOfTasks) {
+    public static void readListFromFile(TaskList listOfTasks) {
         try {
             File dir = new File("data");
             if (!dir.exists()) {
@@ -93,6 +100,7 @@ public class Storage {
 
                     String task = taskBuilder.toString().trim();
 
+                    String task0 = data.substring(12, data.indexOf("(by:") - 1);
                     // Extract raw deadline part (after "(by:")
                     StringBuilder ddlBuilder = new StringBuilder();
                     for (int i = deadlineIndex + 1; i < splitData.length; i++) {
@@ -122,7 +130,7 @@ public class Storage {
                     }
 
                     // Create task object
-                    Task newTask = new Deadline(task, deadline);
+                    Task newTask = new Deadline(task0, deadline);
 
                     // Check priority
                     if (splitData[1].equals("[P]")) {
