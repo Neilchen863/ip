@@ -15,6 +15,7 @@ public class HiChat {
         Storage.readListFromFile(listOfTasks);
     }
 
+    public void dumbdem0(){}
 
     public String getResponse(String command) {
         if (Parser.isBye(command)) {
