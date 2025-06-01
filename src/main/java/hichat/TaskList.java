@@ -47,6 +47,8 @@ public class TaskList {
         listOfTasks.add(toDo);
     }
 
+    public void haha() {}
+
     public Task remove(int taskNumber) {
         return listOfTasks.remove(taskNumber);
     }
