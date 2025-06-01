@@ -15,6 +15,8 @@ public class HiChat {
         Storage.readListFromFile(listOfTasks);
     }
 
+    public void empty(){}
+
 
     public String getResponse(String command) {
         if (Parser.isBye(command)) {
